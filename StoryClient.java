@@ -14,8 +14,8 @@ public class StoryClient {
              Scanner userInput = new Scanner(System.in)) {
 
             // Read and print the initial story
-            String initialStory = serverInput.nextLine();
-            System.out.println("Current Story:\n" + initialStory);
+            //String initialStory = serverInput.nextLine();
+            System.out.println("Welcome to the Story Builder Game!");
 
             // Allow the player to contribute to the story
             while (true) {
@@ -42,6 +42,7 @@ public class StoryClient {
                     if(message != "Waiting for other players...") {
                         String updatedStory = message;
                         System.out.println(updatedStory);
+                        System.out.println("----------------------------------");
                     }
                 }
             }

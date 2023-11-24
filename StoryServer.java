@@ -73,8 +73,6 @@ public class StoryServer {
                                 writer.println(currentStory);
                             }
                         }
-                    } else {
-                        //output.println("Waiting for other players...");
                     }
 
                     // Release the semaphore to allow the next player to take a turn
