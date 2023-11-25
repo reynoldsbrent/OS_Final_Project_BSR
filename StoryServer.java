@@ -7,13 +7,22 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
+/**
+ * This class represents the server for the Story Builder Game.
+ * It listens for client connections and handles them using separate threads.
+ * @author Brent Reynolds
+ * @date Fall 2023
+ */
 public class StoryServer {
-    private static final int PORT = 12345;
+    private static final int PORT = 8080;
     private static List<PrintWriter> clientWriters = new ArrayList<>();
     private static String currentStory = "";
     private static int currentPlayerIndex = 0;
     private static Semaphore turnSemaphore = new Semaphore(1);
 
+    /**
+     * The main method that starts the server and continuously listens for client connections.
+     */
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server is running on port " + PORT);
@@ -28,11 +37,19 @@ public class StoryServer {
         }
     }
 
+    /**
+     * This class handles communication with a single client.
+     * It is responsible for managing the turn-based story-building game.
+     */
     private static class ClientHandler implements Runnable {
         private Socket clientSocket;
         private Scanner input;
         private PrintWriter output;
 
+        /**
+         * Constructor for the ClientHandler class.
+         * @param socket The client's socket.
+         */
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
         }
@@ -43,7 +60,7 @@ public class StoryServer {
                 input = new Scanner(clientSocket.getInputStream());
                 output = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                // Add the client's PrintWriter to the list
+                // Add the client's PrintWriter to the list in a synchronized block
                 synchronized (clientWriters) {
                     clientWriters.add(output);
                 }
@@ -67,7 +84,7 @@ public class StoryServer {
                         // Switch to the next player
                         currentPlayerIndex = (currentPlayerIndex + 1) % clientWriters.size();
 
-                        // Send the updated story to all clients
+                        // Send the updated story to all clients in a synchronized block
                         synchronized (clientWriters) {
                             for (PrintWriter writer : clientWriters) {
                                 writer.println(currentStory);
@@ -81,7 +98,7 @@ public class StoryServer {
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                // Remove the client's PrintWriter when they disconnect
+                // Remove the client's PrintWriter when they disconnect in a synchronized block
                 synchronized (clientWriters) {
                     clientWriters.remove(output);
                 }
@@ -89,4 +106,3 @@ public class StoryServer {
         }
     }
 }
-
