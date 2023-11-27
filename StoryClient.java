@@ -49,7 +49,6 @@ public class StoryClient {
                         System.out.println(updatedStory);
                     }
                 } else {
-                    // Handling other messages (e.g., "Waiting for other players...")
                     if (!message.equals("Waiting for other players...")) {
                         String updatedStory = message;
                         System.out.println(updatedStory);
