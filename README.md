@@ -9,7 +9,10 @@ This project uses the capabilities of synchronized blocks and semaphores to ensu
 
 Once one player disconnects from the server, the game is over.
 
-## Setup Instructions
+![](GameScreenShot.png)
+
+
+## Installation
 
 1. Clone this repository to your local machine
 2. Compile the StoryServer.java and StoryClient.java file
