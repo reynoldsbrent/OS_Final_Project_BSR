@@ -35,7 +35,7 @@ public class ClientManager {
         for (int i = 0; i < NUM_CLIENTS; i++) {
             try {
                 // Delay between the creation of each client thread
-                Thread.sleep(100);
+                Thread.sleep(150);
 
                 // Create a new client thread
                 Thread clientThread = new Thread(() -> {
